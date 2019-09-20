@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        var accessToken = prompt("Please enter jwt token");
+
+        var socket = io('http://127.0.0.1:3000', {query: `token=${accessToken}`});
+        console.log(socket)
+        socket.on('new_like', function(msg){
+            $('#messages').append($('<li>').text(JSON.stringify(msg)));
+        });
+      });
+    </script>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      /*form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }*/
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+
+      div.container {
+        width: 100%;
+        border: 1px solid gray;
+      }
+
+      header, footer {
+        padding: 1em;
+        color: white;
+        background-color: black;
+        clear: left;
+        text-align: center;
+      }
+
+      article {
+        margin-left: 250px;
+        border-left: 1px solid gray;
+        padding: 1em;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <article>
+        <ul id="messages"></ul>
+      </article>
+    </div>
+  </body>
+</html>
